@@ -1,20 +1,25 @@
 #!/bin/bash
 
-check_disk() {
-    echo "Disk Usage:"
-    df -h
-}
+echo "System Monitoring Script"
+echo "Date: $(date)"
+echo
 
-check_memory() {
-    echo "Memory Usage:"
-    free -h
-}
+# CPU Usage
+echo "CPU Usage"
+top -b -n 1 | grep "Cpu(s)" | awk '{print "CPU Usage: " $2+$4 "%"}'
+echo
 
-list_recent_files() {
-    echo "Recent files modified in the last 24 hours:"
-    find ~ -type f -mtime -1 2>/dev/null
-}
+# Memory Usage
+echo "Memory Stats"
+free -h | awk '/Mem/{print "Total: "$2", Used: "$3", Free: "$4}'
+echo
 
-check_disk
-check_memory
-list_recent_files
+# Disk Usage
+echo "Disk Usage"
+df -h --total | awk '/total/{print "Total Disk: "$2", Used: "$3", Free: "$4}'
+echo
+
+# Network Stats
+echo "Network Stats"
+echo "Active Connections: $(ss -tun | wc -l)"
+echo
