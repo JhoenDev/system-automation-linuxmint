@@ -24,3 +24,7 @@ echo "Network Stats"
 echo "Active Connections: $(ss -tun | wc -l)"
 echo
 
+# System Uptime
+echo "System Uptime"
+uptime -p | awk '{print "Uptime: " $0}'
+echo
